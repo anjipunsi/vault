@@ -1,0 +1,49 @@
+resources:
+  - name: repo
+    type: git
+    source: 
+      uri: https://github.com/anjipunsi/vault.git
+      branch: main
+
+
+jobs:
+  - name: run-python-script
+    plan:
+      # - get: credentials # Fetch the output of the previous job
+        # trigger: true
+
+      - get: repo
+        trigger: true
+
+      - task: run-python-script
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: 
+              repository: python
+              tag: "3.9"
+          inputs:
+            # - name: credentials # Input the credentials from the previous job
+            - name: repo
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                git add pyy.py
+                git commit -m "first commit"
+                git branch -M main
+                git remote add origin https://github.com/anjipunsi/vault.git
+                git push -u origin main
+
+                # Install required libraries
+                pip install bs4 
+                pip install pandas
+                pip install requests
+                pip install psycopg2
+                pip install SQLAlchemy 
+                ls -l
+                cd repo
+                ls - l
+                python3 vault/pyy.py
