@@ -29,8 +29,8 @@ if data is not None:
 
         db_host = "192.168.3.38" 
         db_name = "postgres"
-        db_user = "scrap"
-        db_password = "scrap" 
+        db_user = "anjali"
+        db_password = "anjali" 
         db_port="5432"
         engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
         df_table.to_sql('profit_loss_data', engine, if_exists='replace', index=False)
