@@ -15,7 +15,7 @@ for row in tdata.find_all('tr'):
     row_data = []
     for cell in row.find_all(['th','td']):
         row_data.append(cell.text.strip())
-    table_data.append(row_data)
+    table_data.append(row_data)scra
 
 
 df_table = pd.DataFrame(table_data)
@@ -30,9 +30,9 @@ print(df_table)
 import psycopg2
 from sqlalchemy import create_engine
 db_host = "192.168.3.38" 
-db_name = "reliance"
-db_user = "docker"
-db_password = "docker" 
+db_name = "postgres"
+db_user = "scrap"
+db_password = "scrap" 
 db_port="5432"
 engine = create engine (f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
 df_table.to_sql('profit_loss_data', engine, if_exists='replace', index=False)
