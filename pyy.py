@@ -26,3 +26,14 @@ for i in df_table.iloc[:,1:].columns:
     df_table[i] = df_table[i].str.replace(',','').str.replace('%','/100').apply(eval)
 # df_table = df_table.set_index('')
 print(df_table)
+
+import psycopg2
+from sqlalchemy import create_engine
+db_host = "192.168.3.38" 
+db_name = "reliance"
+db_user = "docker"
+db_password = "docker" 
+db_port="5432"
+engine = create engine (f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
+df_table.to_sql('profit_loss_data', engine, if_exists='replace', index=False)
+print("Data loaded to PostgreSQ1")
