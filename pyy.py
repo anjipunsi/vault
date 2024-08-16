@@ -30,6 +30,6 @@ db_name = "postgres"
 db_user = "scrap"
 db_password = "scrap" 
 db_port="5432"
-engine = create engine (f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
+engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
 df_table.to_sql('profit_loss_data', engine, if_exists='replace', index=False)
-print("Data loaded to PostgreSQ1")
+print("Data loaded to Postgres")
