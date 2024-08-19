@@ -12,7 +12,7 @@ soup = bs(webpage.text, 'html.parser')
 data = soup.find('section', id="profit-loss")
 
 if data is not None:
-    tdata = data.find("table")
+    data = data.find("table")
     
     if tdata is not None:
         table_data = []
