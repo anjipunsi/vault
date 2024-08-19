@@ -37,7 +37,7 @@ if data is not None:
         print(df_table)
         
         db_host = "192.168.3.38"
-        db_name = "mydatabase"
+        db_name = "postgres"
         db_user = "anjali"
         db_password = "anjali"
         db_port = "5432"
