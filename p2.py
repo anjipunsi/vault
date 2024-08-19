@@ -37,9 +37,9 @@ if data is not None:
         print(df_table)
         
         db_host = "192.168.3.38"
-        db_name = "postgres"
-        db_user = "anjali"
-        db_password = "anjali"
+        db_name = "concourse"
+        db_user = "concourse_user"
+        db_password = "concourse_pass"
         db_port = "5432"
         
         engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
