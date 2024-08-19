@@ -44,7 +44,7 @@ if data is not None:
         
         engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
         
-        df_table.to_sql('profit_loss_data', engine, if_exists='replace', index=False)
+        df_table.to_sql('profit_loss_data', engine, schema='anjali_schema', if_exists='replace', index=False)
         print("Data loaded to Postgres")
     
     else:
