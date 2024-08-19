@@ -14,10 +14,10 @@ data = soup.find('section', id="profit-loss")
 if data is not None:
     data = data.find("table")
     
-    if tdata is not None:
+    if data is not None:
         table_data = []
         
-        for row in tdata.find_all('tr'):
+        for row in data.find_all('tr'):
             row_data = []
             
             for cell in row.find_all(['th', 'td']):
