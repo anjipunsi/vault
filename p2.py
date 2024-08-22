@@ -53,20 +53,20 @@ if data is not None:
         logging.info("Cleaned and transposed DataFrame with 'id' column:")
         print(df_table)
 
-        # Load data to Postgres
+        # Load original data to Postgres
         db_host = "192.168.3.38"
         db_name = "dbc"
         db_user = "pass"
         db_password = "pass"
         db_port = "5432"
         engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
-        df_table.to_sql('profit_loss_data', engine, if_exists='replace', index=False)
-        logging.info("Data loaded to PostgreSQL")
+        df_table.to_sql('profit_loss_data_original', engine, if_exists='replace', index=False)
+        logging.info("Original data loaded to PostgreSQL")
 
         # Apply melting method
         df_melted = pd.melt(df_table, id_vars=['id', 'Period'], var_name='Metric', value_name='Value')
 
-        # Print the melted DataFrame
+        # Log and print the melted DataFrame
         logging.info("Melted DataFrame:")
         print(df_melted)
 
