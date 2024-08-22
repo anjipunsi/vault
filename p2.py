@@ -35,7 +35,7 @@ if data is not None:
 
         # Reset index after transpose and add an 'id' column
         df_table.reset_index(inplace=True)
-        df_table.rename(columns={'index': 'Period'}, inplace=True)
+        df_table.rename(columns={'index': 'Section'}, inplace=True)
         df_table['id'] = range(1, len(df_table) + 1)
 
         # Rearrange columns to put 'id' at the beginning
@@ -43,7 +43,7 @@ if data is not None:
         df_table = df_table[columns]
 
         # Identify and clean numeric data
-        for col in df_table.columns[2:]:  # Skip 'id' and 'Period' columns
+        for col in df_table.columns[2:]:  # Skip 'id' and 'Section' columns
             if df_table[col].str.isnumeric().all():
                 df_table[col] = df_table[col].str.replace(',', '').apply(pd.to_numeric, errors='coerce')
             elif '%' in df_table[col].astype(str).iloc[0]:  # Check if '%' is present
@@ -64,7 +64,7 @@ if data is not None:
         logging.info("Original data loaded to PostgreSQL")
 
         # Apply melting method
-        df_melted = pd.melt(df_table, id_vars=['id', 'Period'], var_name='Metric', value_name='Value')
+        df_melted = pd.melt(df_table, id_vars=['id', 'Section'], var_name='Metric', value_name='Value')
 
         # Log and print the melted DataFrame
         logging.info("Melted DataFrame:")
