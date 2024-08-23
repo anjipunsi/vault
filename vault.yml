@@ -46,4 +46,4 @@ jobs:
                 ls -l
                 cd repo
                 ls - l
-                python3 vault/nifty.py
+                python3 nifty.py
