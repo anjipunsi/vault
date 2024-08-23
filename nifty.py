@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import psycopg2
 
 # Set up Selenium WebDriver
 driver = webdriver.Chrome()  # Replace with your preferred browser
@@ -51,12 +52,61 @@ for col in df.columns:
     if 'Rs.' in col or 'Cr.' in col:
         df[col] = df[col].apply(lambda x: x.replace(',', '')).astype(float)
 
-# Download data as CSV
-if not df.empty:
-    df.to_csv('nifty_companies.csv', index=False)
-    print("Data downloaded successfully!")
-else:
-    print("No data to download.")
+# Database connection parameters
+db_host = "192.168.3.38"
+db_name = "dbc"
+db_user = "pass"
+db_password = "pass"
+db_port = "5432"
+
+# Establish database connection
+conn = psycopg2.connect(
+    host=db_host,
+    database=db_name,
+    user=db_user,
+    password=db_password,
+    port=db_port
+)
+
+# Create a cursor object
+cur = conn.cursor()
+
+# Create table if not exists
+cur.execute("""
+    CREATE TABLE IF NOT EXISTS nifty_companies (
+        company_name VARCHAR(255),
+        industry VARCHAR(255),
+        market_cap VARCHAR(255),
+        price VARCHAR(255),
+        change VARCHAR(255),
+        volume VARCHAR(255),
+        turnover VARCHAR(255),
+        p_e VARCHAR(255),
+        p_b VARCHAR(255),
+        div_yield VARCHAR(255),
+        roe VARCHAR(255),
+        roce VARCHAR(255)
+    );
+""")
+
+# Insert data into the table
+for index, row in df.iterrows():
+    cur.execute("""
+        INSERT INTO nifty_companies (
+            company_name, industry, market_cap, price, change, volume, turnover, p_e, p_b, div_yield, roe, roce
+        ) VALUES (
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+        );
+    """, tuple(row))
+
+# Commit changes
+conn.commit()
+
+# Close cursor and connection
+cur.close()
+conn.close()
 
 # Close Selenium WebDriver
 driver.quit()
+
+print("Data inserted into PostgreSQL database successfully!")
