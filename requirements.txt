@@ -1,0 +1,6 @@
+beautifulsoup4
+selenium
+psycopg2-binary
+pandas
+requests
+SQLAlchemy
