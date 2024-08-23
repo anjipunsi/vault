@@ -38,6 +38,7 @@ jobs:
                 git push -u origin main
 
                 # Install required libraries
+                pip install beautifulsoup4 selenium psycopg2-binary
                 pip install bs4 
                 pip install pandas
                 pip install requests
