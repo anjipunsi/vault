@@ -1,45 +1,33 @@
-resources:
-  - name: repo
-    type: git
-    source:
-      uri: https://github.com/anjipunsi/vault.git
-      branch: main
+- task: run-python-script
+  config:
+    platform: linux
+    image_resource:
+      type: docker-image
+      source:
+        repository: python
+        tag: "3.9"
+    inputs:
+      - name: repo
+    run:
+      path: sh
+      args:
+        - -c
+        - |
+          # Git operations
+          git add pyy.py
+          git commit -m "first commit"
+          git branch -M main
+          git remote add origin https://github.com/anjipunsi/vault.git
+          git push -u origin main
 
-jobs:
-  - name: run-python-script
-    plan:
-      - get: repo
-        trigger: true
+          # Install required libraries
+          pip install -r requirements.txt
+          pip install mysql-connector-python  # Install mysql.connector library
 
-      - task: run-python-script
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              repository: python
-              tag: "3.9"
-          inputs:
-            - name: repo
-          run:
-            path: sh
-            args:
-              - -c
-              - |
-                # Git operations
-                git add pyy.py
-                git commit -m "first commit"
-                git branch -M main
-                git remote add origin https://github.com/anjipunsi/vault.git
-                git push -u origin main
+          # List files and change directory
+          ls -l
+          cd repo
+          ls -l
 
-                # Install required libraries
-                pip install -r requirements.txt
-
-                # List files and change directory
-                ls -l
-                cd repo
-                ls -l
-
-                # Run Python script
-                python3 reliance.py
+          # Run Python script
+          python3 reliance.py
