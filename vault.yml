@@ -22,7 +22,7 @@
 
           # Install required libraries
           pip install -r requirements.txt
-          pip install mysql-connector-python  # Install mysql.connector library
+          pip install mysql.connector  # Install mysql.connector library
 
           # List files and change directory
           ls -l
