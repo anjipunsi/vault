@@ -50,7 +50,7 @@ for i in df_table.iloc[:, 1:].columns:
     df_table[i] = df_table[i].str.replace(',', '').str.replace('%', '/100').apply(safe_eval)
 
 # MySQL database credentials
-db_host = "127.0.0.1"
+db_host = "192.168.3.38"
 db_name = "test_db"
 db_user = "root"
 db_password = "root"
