@@ -42,4 +42,4 @@ jobs:
                 ls -l
 
                 # Run Python script
-                python3 nifty.py
+                python3 reliance.py
