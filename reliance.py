@@ -1,4 +1,5 @@
 import requests
+from requests.exceptions import ConnectionError
 from bs4 import BeautifulSoup as bs
 import pandas as pd
 import csv
@@ -6,10 +7,16 @@ import mysql.connector
 from sqlalchemy import create_engine
 
 # URL to scrape
-url = 'https://screener.in/company/RELIANCE/consolidated/'
+url = 'https://www.screener.in/company/RELIANCE/consolidated/'
 
-# Send get request to url and stores in webpage
-webpage = requests.get(url)
+try:
+    webpage = requests.get(url)
+    webpage.raise_for_status()  # Raise an exception for HTTP errors
+except ConnectionError as e:
+    print(f"Error: {e}")
+    exit(1)  # Exit the script with a non-zero status code
+
+# Parse the HTML content
 soup = bs(webpage.text, 'html.parser')
 
 # Find the profit-loss section and table
