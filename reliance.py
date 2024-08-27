@@ -57,10 +57,10 @@ for i in df_table.iloc[:, 1:].columns:
 
 # MySQL database credentials
 db_host = "192.168.3.38"
-db_name = "test_db"
+db_name = "db"
 db_user = "root"
 db_password = "root"
-db_port = "3306"
+db_port = "3333"
 
 # Create engine to connect to MySQL database
 engine = create_engine(f'mysql+mysqlconnector://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
