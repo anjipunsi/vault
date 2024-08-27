@@ -2,8 +2,6 @@ import requests
 from bs4 import BeautifulSoup as bs
 import pandas as pd
 import csv
-import mysql.connector
-from sqlalchemy import create_engine
 
 # URL to scrape
 url = 'https://screener.in/company/RELIANCE/consolidated/'
@@ -23,11 +21,6 @@ for row in tdata.find_all('tr'):
     for cell in row.find_all(['th', 'td']):
         row_data.append(cell.text.strip())
     table_data.append(row_data)
-
-# Save table data to csv
-with open("table_data.csv", 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(table_data)
 
 # Create DataFrame from table data
 df_table = pd.DataFrame(table_data)
@@ -49,17 +42,4 @@ def safe_eval(val):
 for i in df_table.iloc[:, 1:].columns:
     df_table[i] = df_table[i].str.replace(',', '').str.replace('%', '/100').apply(safe_eval)
 
-# MySQL database credentials
-db_host = "192.168.3.38"
-db_name = "test_db"
-db_user = "root"
-db_password = "root"
-db_port = "3306"
-
-# Create engine to connect to MySQL database
-engine = create_engine(f'mysql+mysqlconnector://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
-
-# Load the DataFrame into the MySQL database
-df_table.to_sql('profit_loss_data', engine, if_exists='replace', index=False)
-
-print("Data loaded successfully into MySQL database!")
+print(df_table)
